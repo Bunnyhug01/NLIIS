@@ -1,0 +1,102 @@
+﻿{% extends 'main/base.html' %}
+
+{% block title %}
+Generation
+{% endblock %}
+
+{% block content %}
+    <h1>Word for generation</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ context.form.body }}<br>
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            Prefix
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Prefix" id="prefix1" value="noPrefix">
+              <label class="form-check-label" for="prefix1">
+                No prefix
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Prefix" id="prefix2" value="generalPrefix">
+              <label class="form-check-label" for="prefix2">
+                General prefix
+              </label>
+            </div> 
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Prefix" id="prefix3" value="negativePrefix">
+              <label class="form-check-label" for="prefix3">
+                Negative prefix
+              </label>
+            </div> 
+          </div>
+
+          <div class="col">
+            Suffix
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Suffix" id="suffix1" value="noSuffix">
+              <label class="form-check-label" for="suffix1">
+                No suffix
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Suffix" id="suffix2" value="Noun">
+              <label class="form-check-label" for="suffix2">
+                Noun
+              </label>
+            </div> 
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Suffix" id="suffix3" value="Adjective">
+              <label class="form-check-label" for="suffix3">
+                Adjective
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Suffix" id="suffix4" value="Verb">
+              <label class="form-check-label" for="suffix4">
+                Verb
+              </label>
+            </div> 
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Suffix" id="suffix5" value="Adverb">
+              <label class="form-check-label" for="suffix5">
+                Adverb
+              </label>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+        <button type="submit" class="btn btn-success" name="Submit">Generate</button>
+        <button type="clear" class="btn btn-primary" name="Clear">Clear</button>
+        <span>{{ error }}</span>
+    </form>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Words</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for el in generatedWords %}
+            <tr>
+              <td>{{ el }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+{% endblock %}

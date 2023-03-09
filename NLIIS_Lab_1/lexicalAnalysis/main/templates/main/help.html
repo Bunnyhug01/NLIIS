@@ -1,0 +1,34 @@
+﻿{% extends 'main/base.html' %}
+
+{% block title %}
+Help
+{% endblock %}
+
+{% block content %}
+    <audio autoplay loop>
+        <source src="https://zvukipro.com/uploads/files/2020-12/1609052060_elevator-music-vanoss-gaming-background-music.mp3">
+    </audio>
+    <style>
+        .mirrorY { transform: scale(-1, 1);
+                   float: right; }
+        p {
+            font-size: 14pt;
+        }
+    </style>
+    <div>
+        <h1 style = "text-align:center">Help</h1>
+        <p style = "text-align:center">
+            This application is designed for lexical and grammatical analysis of natural language.</br>
+            The application has two modes of operation.</br></br>
+            The first is text processing, it is designed to select lexemes from the text and output them with additional information (part of speech, prefixes, suffixes).</br>
+            For text processing it is enough to write it manually or load it from a file and click the "Process" button.</br>
+            All information will appear in the table.</br></br>
+            All detected lexemes and their information is saved, so you can see their list in the "Saved Words" tab.</br>
+            Also, this tab has the ability to search for a particular lexeme and if want you can delete some lexemes or the whole table.</br></br>
+            The second mode is generation of word forms, based on the selected parameters (the choice of prefixes, suffixes).</br>
+            To generate word forms, enter the word and press the "Generate" button. The whole list of word forms will appear in the table.
+        </p>
+        <img src="https://media.tenor.com/xdwSi1-JLoYAAAAi/pipkin-pippa.gif" alt="pipkin-pipa" width="152.5" height="249" />
+        <img src="https://media.tenor.com/xdwSi1-JLoYAAAAi/pipkin-pippa.gif" alt="pipkin-pipa" width="152.5" height="249" class="mirrorY" />
+    </div>
+{% endblock %}

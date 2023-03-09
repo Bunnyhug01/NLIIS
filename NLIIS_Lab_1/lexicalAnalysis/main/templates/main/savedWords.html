@@ -1,0 +1,42 @@
+﻿{% extends 'main/base.html' %}
+
+{% block title %}
+Saved Words
+{% endblock %}
+
+{% block content %}
+    <h1>Saved Words</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ context.form.body }}<br>
+
+        <button type="submit" class="btn btn-success" name="Submit">Find</button>
+        <button type="clear" class="btn btn-primary" name="Clear">Clear</button>
+        <button type="delete" class="btn btn-danger" name="Delete">Delete</button>
+        <span>{{ error }}</span>
+    </form>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Words</th>
+              <th scope="col">Pos</th>
+              <th scope="col">Prefixes</th>
+              <th scope="col">Suffixes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for el in words %}
+            <tr>
+              <td>{{ el.body }}</td>
+              <td>{{ el.pos }}</td>
+              <td>{{ el.prefixes }}</td>
+              <td>{{ el.suffixes }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+{% endblock %}
