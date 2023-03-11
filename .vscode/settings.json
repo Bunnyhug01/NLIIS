@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./NLIIS_Lab_1/lexicalAnalysis/main/components"
+    ]
+}

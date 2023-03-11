@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'D:\Labs\NLIIS\NLIIS_Lab_1\lexicalAnalysis\main\components')
+sys.path.append(r'D:\Labs\NLIIS\NLIIS\NLIIS_Lab_1\lexicalAnalysis\main\components')
 
 from words import Word
 

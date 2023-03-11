@@ -10,7 +10,46 @@ Saved Words
         {% csrf_token %}
         {{ context.form.body }}<br>
 
-        <button type="submit" class="btn btn-success" name="Submit">Find</button>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              Filter
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Filter" id="noun" value="Noun">
+                <label class="form-check-label" for="noun">
+                  Noun
+                </label>
+              </div>
+  
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Filter" id="adjective" value="Adjective">
+                <label class="form-check-label" for="adjective">
+                  Adjective
+                </label>
+              </div> 
+  
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Filter" id="verb" value="Verb">
+                <label class="form-check-label" for="verb">
+                  Verb
+                </label>
+              </div> 
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Filter" id="adverb" value="Adverb">
+                <label class="form-check-label" for="adverb">
+                  Adverb
+                </label>
+              </div> 
+            </div>
+          </div>
+        </div>
+
+        </br>
+        <button type="filter" class="btn btn-primary" name="FilterButton">Filter</button>
+        </br></br>
+
+        <button type="find" class="btn btn-success" name="Find">Find</button>
         <button type="clear" class="btn btn-primary" name="Clear">Clear</button>
         <button type="delete" class="btn btn-danger" name="Delete">Delete</button>
         <span>{{ error }}</span>

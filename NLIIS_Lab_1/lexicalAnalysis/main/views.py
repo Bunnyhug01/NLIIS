@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'D:\Labs\NLIIS\NLIIS_Lab_1\lexicalAnalysis\main\components')
+sys.path.append(r'D:\Labs\NLIIS\NLIIS\NLIIS_Lab_1\lexicalAnalysis\main\components')
 
 from django.shortcuts import render, redirect
 from .models import Word
@@ -51,7 +51,8 @@ def process(request):
 					+ affix.getSuffixes(word, affix.adverbSuffixes)))
 				
 			for word in processedWords:
-				Word.objects.create(body=word.lemma, pos=word.pos, prefixes=word.correctPrefixes, suffixes = word.correctSuffixes)
+				if not Word.objects.filter(body = word.lemma).exists():
+					Word.objects.get_or_create(body=word.lemma, pos=word.pos, prefixes=word.correctPrefixes, suffixes = word.correctSuffixes)
 
 		else:
 			error = 'Form was wrong!'
@@ -127,12 +128,25 @@ def help(request):
 def savedWords(request):
 	words = Word.objects.all()
 
+	wordTypes = {
+		'Noun' : 'N',
+		'Adjective' : 'J',
+		'Verb' : 'V',
+		'Adverb' : 'R'
+	}
+
 	error = ''
 	if request.method == 'POST':
 		form = WordForm(request.POST)
 		
 		if "Clear" in request.POST:
 			return redirect(savedWords)
+		
+		if "FilterButton" and "Filter" in request.POST:
+			filterRadio = request.POST['Filter']
+
+			wordType = wordTypes[filterRadio]
+			words = Word.objects.filter(pos__startswith=wordType)
 		
 		if form.is_valid():
 			word = form.data['body']
@@ -143,7 +157,7 @@ def savedWords(request):
 				else:
 					Word.objects.get(body = word).delete()
 
-			if "Submit" in request.POST:
+			if "Find" in request.POST:
 				words = Word.objects.filter(body = word)
 		else:
 			error = 'Form was wrong!'
