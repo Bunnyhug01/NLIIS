@@ -1,17 +1,16 @@
 import sys
-sys.path.append(r'D:\Labs\NLIIS\NLIIS\NLIIS_Lab_1\lexicalAnalysis\main\components')
+sys.path.append(r'.\main\components')
 
 from django.shortcuts import render, redirect
 from .models import Word
 from .forms import TextForm, WordForm
 
 from textPreprocessing import textPreprocessing
+
 from tags import Tag
 from wordProcessing import WordProcessing
 from affixes import Affix
 from processedWord import ProcessedWord
-
-# Create your views here.
 
 def process(request):
 	tag = Tag()
@@ -158,7 +157,7 @@ def savedWords(request):
 					Word.objects.get(body = word).delete()
 
 			if "Find" in request.POST:
-				words = Word.objects.filter(body = word)
+				words = Word.objects.filter(body__startswith = word)
 		else:
 			error = 'Form was wrong!'
 
