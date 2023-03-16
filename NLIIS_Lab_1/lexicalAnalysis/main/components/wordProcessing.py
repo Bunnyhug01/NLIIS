@@ -1,4 +1,3 @@
-import sys
 
 from words import Word
 from nltk.stem import WordNetLemmatizer
