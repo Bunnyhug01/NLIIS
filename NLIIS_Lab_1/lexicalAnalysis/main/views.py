@@ -107,8 +107,11 @@ def generation(request):
 			word = tag.addPosTag(word)
 			word = wordProcessing.lemmatizeText(word)
 
-			generatedWords = wordProcessing.generatePossibleWords(word.pop(0), prefixParam[prefixRadio], suffixParam[suffixRadio])
-			generatedWords = [word.strip() for word in generatedWords]
+			if len(word) == 0:
+				error = 'Please enter a word'
+			else:
+				generatedWords = wordProcessing.generatePossibleWords(word.pop(0), prefixParam[prefixRadio], suffixParam[suffixRadio])
+				generatedWords = [word.strip() for word in generatedWords]
 		else:
 			error = 'Form was wrong!'
 

@@ -9,8 +9,7 @@ Generation
     <form method="post">
         {% csrf_token %}
         {{ context.form.body }}<br>
-
-
+      <h1>{{ context.error }}</h1>
       <div class="container">
         <div class="row">
           <div class="col">
@@ -79,7 +78,6 @@ Generation
 
         <button type="submit" class="btn btn-success" name="Submit">Generate</button>
         <button type="clear" class="btn btn-primary" name="Clear">Clear</button>
-        <span>{{ error }}</span>
     </form>
 
 
