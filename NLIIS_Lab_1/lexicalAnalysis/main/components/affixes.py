@@ -1,4 +1,3 @@
-
 from words import Word
 
 class Affix:
