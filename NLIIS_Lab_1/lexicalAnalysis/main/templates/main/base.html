@@ -9,13 +9,14 @@
 <body>
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-            <span class="fs-4">Lexical Analysis</span>
+            <span class="fs-4">Language Analysis</span>
         </a>
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'process' %}">Processing</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'process' %}">Lexical Processing</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'generation' %}">Generation</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'savedWords' %}">Saved Words</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'syntaxAnalysis' %}">Syntax Analysis</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'help' %}">Help</a>
         </nav>
     </div>

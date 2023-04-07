@@ -2,7 +2,7 @@ import sys
 sys.path.append(r'.\main\components')
 
 from django.shortcuts import render, redirect
-from .models import Word
+from .models import Word, Text
 from .forms import TextForm, WordForm
 
 from textPreprocessing import textPreprocessing
@@ -11,6 +11,7 @@ from tags import Tag
 from wordProcessing import WordProcessing
 from affixes import Affix
 from processedWord import ProcessedWord
+from syntaxTree import SyntaxTree
 
 def process(request):
 	tag = Tag()
@@ -170,3 +171,41 @@ def savedWords(request):
 		'error': error
 	}
 	return render(request, 'main/savedWords.html', {'context' : context, 'words': words})
+
+
+def syntaxAnalysis(request):
+	syntaxTree = SyntaxTree()
+
+	tree = None
+	text = ''
+	error = ''
+	if request.method == 'POST':
+		form = TextForm(request.POST)
+		
+		if "Clear" in request.POST:
+			return redirect(syntaxAnalysis)
+
+		if form.is_valid():
+			form.save()
+
+			if "File" in request.FILES:
+				file = request.FILES['File'].readlines()
+				for element in file:
+					text = '{}'.format(element.strip()).replace("b\'", '').replace("\'", '')
+			else:
+				text = form.data['body']
+			
+			tree = syntaxTree.generateTree(text)
+			tree = syntaxTree.drawTree(tree)
+
+			Text.objects.get_or_create(body=text, tree=tree)
+
+		else:
+			error = 'Form was wrong!'
+
+	form = TextForm()
+	context = {
+		'form':	form,
+		'error': error
+	}
+	return render(request, 'main/syntaxAnalysis.html', {'context' : context, 'tree' : tree})
