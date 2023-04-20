@@ -12,6 +12,7 @@ from wordProcessing import WordProcessing
 from affixes import Affix
 from processedWord import ProcessedWord
 from syntaxTree import SyntaxTree
+from semanticTree import SemanticTree
 
 def process(request):
 	tag = Tag()
@@ -209,3 +210,41 @@ def syntaxAnalysis(request):
 		'error': error
 	}
 	return render(request, 'main/syntaxAnalysis.html', {'context' : context, 'tree' : tree})
+
+
+def semanticAnalysis(request):
+	semanticTree = SemanticTree()
+
+	tree = None
+	text = ''
+	error = ''
+	if request.method == 'POST':
+		form = TextForm(request.POST)
+		
+		if "Clear" in request.POST:
+			return redirect(semanticAnalysis)
+
+		if form.is_valid():
+			form.save()
+
+			if "File" in request.FILES:
+				file = request.FILES['File'].readlines()
+				for element in file:
+					text = '{}'.format(element.strip()).replace("b\'", '').replace("\'", '')
+			else:
+				text = form.data['body']
+			
+			tree = semanticTree.generateTree(text)
+			tree = semanticTree.drawTree(tree)
+
+			Text.objects.get_or_create(body=text, semanticTree=tree)
+
+		else:
+			error = 'Form was wrong!'
+
+	form = TextForm()
+	context = {
+		'form':	form,
+		'error': error
+	}
+	return render(request, 'main/semanticAnalysis.html', {'context' : context, 'tree' : tree})

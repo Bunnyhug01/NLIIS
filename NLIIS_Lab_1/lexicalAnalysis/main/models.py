@@ -22,6 +22,7 @@ class Text(models.Model):
 	body = models.TextField('Text', blank=True, null=True)
 	lemmas = models.ForeignKey(Word, on_delete=models.CASCADE, null=True)
 	tree = models.TextField('Tree', null=True)
+	semanticTree = models.TextField('Semantic Tree', null=True)
 	
 	def __str__(self):
 		return self.body[:50]

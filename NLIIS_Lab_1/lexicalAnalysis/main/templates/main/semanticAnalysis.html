@@ -1,0 +1,34 @@
+﻿{% extends 'main/base.html' %}
+
+{% block title %}
+Semantic Analysis
+{% endblock %}
+
+{% block content %}
+
+  <div>
+    <div>
+      <h1>Text for semantic analysis</h1>
+  
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input class="form-control" type="file" name="File">
+          </div>
+          {{ context.form.body }}<br>
+          <button type="submit" class="btn btn-success" name="Submit">Analyze</button>
+          <button type="clear" class="btn btn-primary" name="Clear">Clear</button>
+          <span>{{ context.error }}</span>
+      </form>
+    </div>
+  
+    {% if tree %}
+    <div>
+      <h4 style="text-align: center">
+       <pre>{{ tree }}</pre>
+      </h4>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock %}
