@@ -77,7 +77,7 @@ Chat
 
 
         .chats {
-            padding: 30px 15px 0 25px;
+            height: 500px;
         }
 
         .msg-page {
@@ -270,78 +270,105 @@ Chat
         }
     </style>
 
-    
     <!-- Main container -->
     <div class="container">
-
         <!-- Chat inbox  -->
-        <div class="chat-page">
+        <div class="chat-page" id="chat-page">
             <div class="msg-inbox">
                 <div class="chats">
-
                     <!-- Message container -->
-                    <div class="msg-page">
-
-                        <!-- Incoming messages -->
-                        <div class="received-chats">
-                            <div class="received-chats-img">
-                                <img src="https://www.nicepng.com/png/detail/207-2077371_bots-instagram-logo-round-blue.png">
-                            </div>
-                            <div class="received-msg">
-                                <div class="received-msg-inbox">
-                                    <p>Hi !! This is message from Riya . Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Non quas nemo eum, earum sunt, nobis similique quisquam eveniet pariatur commodi modi voluptatibus iusto omnis harum illumiste distinctio expedita illo!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Outgoing messages -->
-                        <div class="outgoing-chats">
-                            <div class="outgoing-chats-img">
-                                <img src="https://cdn-icons-png.flaticon.com/512/5675/5675059.png">
-                            </div>
-                            <div class="outgoing-msg">
-                                <div class="outgoing-chats-msg">
-                                    <p class="multi-msg">Hi riya , Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo nobis deleniti earum magni recusandae assumenda.</p>
-                                    <p class="multi-msg">Lorem ipsum dolor sit amet consectetur.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="received-chats">
-                            <div class="received-chats-img">
-                                <img src="https://www.nicepng.com/png/detail/207-2077371_bots-instagram-logo-round-blue.png">
-                            </div>
-                            <div class="received-msg">
-                                <div class="received-msg-inbox">
-                                    <p class="single-msg">Hi !! This is message from John Lewis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. iste distinctio expedita illo!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing-chats">
-                            <div class="outgoing-chats-img">
-                                <img src="https://cdn-icons-png.flaticon.com/512/5675/5675059.png">
-                            </div>
-                            <div class="outgoing-msg">
-                                <div class="outgoing-chats-msg">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, sequi.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="msg-page" id="msg-page">
                     </div>
                 </div>
-
                 <!-- msg-bottom section -->
                 <div class="msg-bottom">
                     <form method="post">
                         {% csrf_token %}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Write reques..." name="requestInput">
-                            <button type="button" name="Submit" style="padding: 0; border: none; background: none;"><span class="input-group-text send-icon"><i class="bi bi-send "></i></span></button>
+                            <input type="text" class="form-control" placeholder="Write reques..." name="requestInput" id="requestInput">
+                            <input type="hidden" id="data" value="{{ context.answer }}">
+                            <button type="button" name="Submit" id="btn1" style="padding: 0; border: none; background: none;" onclick="addMassage(document.getElementById('requestInput').value)">
+                                <span class="input-group-text send-icon">
+                                    <i class="bi bi-send "></i>
+                                </span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+        
+        function sendData(massage) {
+
+            $.ajax({
+                url: 'chat',
+                type: 'GET',
+                data: {
+                    "massage": massage,
+                },
+                success: function(data) {
+                    console.log('Successful');
+                },
+                error: function() {
+                    console.error('Failure:');
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        function addMassage(massage) {
+            if (massage !== '') {
+                document.getElementById("msg-page").innerHTML +=
+                    `<div class='outgoing-chats' id='userMsg'>\
+                        <div class='outgoing-chats-img'>\
+                            <img src='https://cdn-icons-png.flaticon.com/512/5675/5675059.png'>\
+                        </div>\
+                        <div class='outgoing-msg'>\
+                            <div class='outgoing-chats-msg'>\
+                                <p class='multi-msg'>${massage}</p>\
+                            </div>\
+                        </div>\
+                    </div>`;
+                
+                sendData(massage);
+                setTimeout(addAnswer, 1000);
+                scrollToEnd('#msg-page')
+            }
+        }
+
+        function addAnswer() {
+            answer = document.getElementById("data").value
+            document.getElementById("msg-page").innerHTML +=
+            `<div class='received-chats'>\
+                <div class='received-chats-img'>\
+                    <img src='https://www.vhv.rs/dpng/d/4-48162_mee6-bot-hd-png-download.png'>\
+                </div>\
+                <div class='received-msg'>\
+                    <div class='received-msg-inbox'>\
+                        <p>${answer}</p>\
+                    </div>\
+                </div>\
+            </div>`;
+            
+            scrollToEnd('#msg-page');
+        }
+
+    </script>
+
+    <script>
+
+        let scrollToEnd = ( elem ) => {
+            let el = document.querySelector(elem);
+            el.scrollTop = el.scrollHeight;
+        }
+
+    </script>
 
 {% endblock %}

@@ -13,6 +13,7 @@ from affixes import Affix
 from processedWord import ProcessedWord
 from syntaxTree import SyntaxTree
 from semanticTree import SemanticTree
+from chat import AnimalsChat
 
 def process(request):
 	tag = Tag()
@@ -252,9 +253,12 @@ def semanticAnalysis(request):
 
 def chat(request):
 
-	if request.method == 'POST':
-		if 'Submit' in request.POST:
-			userRequest = request.POST.get('requestInput')
-			print(userRequest)
+	animalsChat = AnimalsChat()
 
-	return render(request, 'main/chat.html')
+	userRequest = request.GET.get('massage', None)
+	answer = 'Hello, "requests" are working in progress...'
+
+	context = {
+		'answer' : answer,
+	}
+	return render(request, 'main/chat.html', {'context': context})
