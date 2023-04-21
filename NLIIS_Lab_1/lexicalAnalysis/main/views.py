@@ -248,3 +248,13 @@ def semanticAnalysis(request):
 		'error': error
 	}
 	return render(request, 'main/semanticAnalysis.html', {'context' : context, 'tree' : tree})
+
+
+def chat(request):
+
+	if request.method == 'POST':
+		if 'Submit' in request.POST:
+			userRequest = request.POST.get('requestInput')
+			print(userRequest)
+
+	return render(request, 'main/chat.html')
