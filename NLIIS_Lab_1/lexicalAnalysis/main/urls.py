@@ -9,4 +9,5 @@ urlpatterns = [
     path('syntaxAnalysis', views.syntaxAnalysis, name = 'syntaxAnalysis'),
     path('semanticAnalysis', views.semanticAnalysis, name = 'semanticAnalysis'),
     path('chat', views.chat, name = 'chat'),
+    path('chat_answer', views.chat_answer, name = 'chat_answer'),
 ]

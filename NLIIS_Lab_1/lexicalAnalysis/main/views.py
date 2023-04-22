@@ -2,6 +2,7 @@ import sys
 sys.path.append(r'.\main\components')
 
 from django.shortcuts import render, redirect
+from django.http import *
 from .models import Word, Text
 from .forms import TextForm, WordForm
 
@@ -253,22 +254,22 @@ def semanticAnalysis(request):
 
 
 def chat(request):
+	return render(request, 'main/chat.html', {})
 
-	animalsChat = AnimalsChat()
+def chat_answer(request):
+	message = request.GET.get('message')
+	
+	# animalsChat = AnimalsChat()
 
 	answer = 'Command is not recognized. Please enter "help" for commands.'
-	userRequest = request.GET.get('massage', None)
 	
-	if userRequest == 'help':
+	if message == 'help':
 		answer = '''Get all animals: animals
 					Find animals by feature: Find animals by feature predator
 					Get all features: features'''
-		
-	#elif userRequest in getSynonymsString('animals'):
-	#answer = animalsChat.getAnimals()
+	# elif message in getSynonymsString('animals'):
+	# 	answer = animalsChat.getAnimals()
 
-	context = {
+	return JsonResponse({
 		'answer' : answer,
-	}
-
-	return render(request, 'main/chat.html', {'context': context})
+	})

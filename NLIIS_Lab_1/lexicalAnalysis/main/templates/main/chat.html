@@ -302,21 +302,13 @@ Chat
 
     <script>
         
-        function sendData(massage) {
-
-            $.ajax({
-                url: 'chat',
-                type: 'GET',
-                data: {
-                    "massage": massage,
-                },
-                success: function(data) {
-                    console.log('Successful');
-                },
-                error: function() {
-                    console.error('Failure:');
+        async function sendData(message) {
+            return await fetch("chat_answer?message=" + message, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
                 }
-            });
+            }).then(response => response.json()).then(json => json['answer']);
         }
 
     </script>
@@ -336,15 +328,13 @@ Chat
                         </div>\
                     </div>`;
                 
-                sendData(massage);
-                setTimeout(addAnswer, 1000);
+                answer = sendData(massage);
+                setTimeout(async () => addAnswer(await answer), 0);
                 scrollToEnd('#msg-page')
             }
         }
 
-        function addAnswer() {
-            answer = '{{ context.answer }}'
-            console.log(answer)
+        function addAnswer(answer) {
             document.getElementById("msg-page").innerHTML +=
             `<div class='received-chats'>\
                 <div class='received-chats-img'>\
@@ -356,7 +346,6 @@ Chat
                     </div>\
                 </div>\
             </div>`;
-            
             scrollToEnd('#msg-page');
         }
 
