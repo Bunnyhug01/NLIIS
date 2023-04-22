@@ -282,17 +282,14 @@ Chat
                 </div>
                 <!-- msg-bottom section -->
                 <div class="msg-bottom">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Write reques..." name="requestInput" id="requestInput">
-                            <button type="button" name="Submit" id="btn1" style="padding: 0; border: none; background: none;" onclick="addMassage(document.getElementById('requestInput').value)">
-                                <span class="input-group-text send-icon">
-                                    <i class="bi bi-send "></i>
-                                </span>
-                            </button>
-                        </div>
-                    </form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Write reques..." name="requestInput" id="requestInput">
+                        <button type="button" name="Submit" id="btn1" style="padding: 0; border: none; background: none;">
+                            <span class="input-group-text send-icon">
+                                <i class="bi bi-send "></i>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -314,6 +311,17 @@ Chat
     </script>
 
     <script>
+        btn1 = document.getElementById('btn1')
+        requestInput = document.getElementById('requestInput')
+        requestInput.addEventListener("keypress", event => {
+            if(event.key === 'Enter')
+            btn1.click()
+        });
+        btn1.onclick = event => {
+            addMassage(requestInput.value)
+            requestInput.value = ''
+        }
+
         function addMassage(massage) {
             if (massage !== '') {
                 document.getElementById("msg-page").innerHTML +=
@@ -328,9 +336,9 @@ Chat
                         </div>\
                     </div>`;
                 
-                answer = sendData(massage);
-                setTimeout(async () => addAnswer(await answer), 0);
                 scrollToEnd('#msg-page')
+                answer = sendData(massage);
+                setTimeout(async () => addAnswer(await answer), 500);
             }
         }
 
