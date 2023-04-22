@@ -4,7 +4,12 @@ FILE_NAME = "zoo.csv"
 
 class AnimalsChat:
     
-    def getAnimals(feature):
+    def getAnimals(self):
+        animals = parseCsv(FILE_NAME)
+        print(animals)
+
+
+    def getAnimalsByFeature(self, feature):
         animals = parseCsv(FILE_NAME)
 
         found_animals = []

@@ -286,7 +286,6 @@ Chat
                         {% csrf_token %}
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Write reques..." name="requestInput" id="requestInput">
-                            <input type="hidden" id="data" value="{{ context.answer }}">
                             <button type="button" name="Submit" id="btn1" style="padding: 0; border: none; background: none;" onclick="addMassage(document.getElementById('requestInput').value)">
                                 <span class="input-group-text send-icon">
                                     <i class="bi bi-send "></i>
@@ -344,7 +343,8 @@ Chat
         }
 
         function addAnswer() {
-            answer = document.getElementById("data").value
+            answer = '{{ context.answer }}'
+            console.log(answer)
             document.getElementById("msg-page").innerHTML +=
             `<div class='received-chats'>\
                 <div class='received-chats-img'>\

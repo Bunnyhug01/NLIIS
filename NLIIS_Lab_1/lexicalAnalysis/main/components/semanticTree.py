@@ -73,6 +73,14 @@ def getSynonyms(word):
     return synonyms
 
 
+def getSynonymsString(word):
+    synonyms = []
+    for synset in wordnet.synsets(word):
+        for lemma in synset.lemmas():
+            synonyms.append(lemma.name())
+    return synonyms
+
+
 def getAntonyms(word):
     antonyms = []
     for synset in word:
