@@ -13,6 +13,7 @@ from affixes import Affix
 from processedWord import ProcessedWord
 from syntaxTree import SyntaxTree
 from semanticTree import SemanticTree
+from semanticTree import getSynonymsString
 from chat import AnimalsChat
 
 def process(request):
@@ -255,10 +256,19 @@ def chat(request):
 
 	animalsChat = AnimalsChat()
 
+	answer = 'Command is not recognized. Please enter "help" for commands.'
 	userRequest = request.GET.get('massage', None)
-	answer = 'Hello, "requests" are working in progress...'
+	
+	if userRequest == 'help':
+		answer = '''Get all animals: animals
+					Find animals by feature: Find animals by feature predator
+					Get all features: features'''
+		
+	#elif userRequest in getSynonymsString('animals'):
+	#answer = animalsChat.getAnimals()
 
 	context = {
 		'answer' : answer,
 	}
+
 	return render(request, 'main/chat.html', {'context': context})
