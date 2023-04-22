@@ -1,17 +1,28 @@
 import csv
 
-FILE_NAME = "zoo.csv"
+FILE_NAME = "main\components\csv\zoo.csv"
 
 class AnimalsChat:
     
     def getAnimals(self):
-        animals = parseCsv(FILE_NAME)
-        print(animals)
+        table = parseCsv(FILE_NAME)
+
+        animals = []
+        for row in table:
+            animals.append(row[0])
+
+        animals.remove('animal_name')
+        return animals
+    
+
+    def getFeatures(self):
+        features = parseCsv(FILE_NAME)
+        return features[0]
 
 
     def getAnimalsByFeature(self, feature):
         animals = parseCsv(FILE_NAME)
-
+    
         found_animals = []
         feature_number = getHeader(FILE_NAME).index(feature)
         for animal in animals:

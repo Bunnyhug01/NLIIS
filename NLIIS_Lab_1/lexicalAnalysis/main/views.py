@@ -259,16 +259,30 @@ def chat(request):
 def chat_answer(request):
 	message = request.GET.get('message')
 	
-	# animalsChat = AnimalsChat()
+	animalsChat = AnimalsChat()
 
 	answer = 'Command is not recognized. Please enter "help" for commands.'
 	
-	if message == 'help':
-		answer = '''Get all animals: animals
-					Find animals by feature: Find animals by feature predator
-					Get all features: features'''
-	# elif message in getSynonymsString('animals'):
-	# 	answer = animalsChat.getAnimals()
+	if message in getSynonymsString('help'):
+		answer = '''Get all animals: animals;
+					Find animals by feature: Find predator;
+					Get all features: features;
+					Also you can use some synonyms of command names.'''
+		
+	elif message in getSynonymsString('animals'):
+		answer = animalsChat.getAnimals()
+
+	elif message in getSynonymsString('features'):
+		answer = animalsChat.getFeatures()
+
+	elif message.split(' ')[0] in getSynonymsString('find'):
+		features =  animalsChat.getFeatures()
+		feature = message.split(' ')[-1]
+
+		if feature in features:
+			answer = animalsChat.getAnimalsByFeature(feature)
+		else:
+			answer = f'There is not feature "{feature}"'
 
 	return JsonResponse({
 		'answer' : answer,

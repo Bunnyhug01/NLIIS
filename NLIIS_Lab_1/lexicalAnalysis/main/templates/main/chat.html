@@ -283,7 +283,7 @@ Chat
                 <!-- msg-bottom section -->
                 <div class="msg-bottom">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Write reques..." name="requestInput" id="requestInput">
+                        <input type="text" class="form-control" placeholder="Write request..." name="requestInput" id="requestInput">
                         <button type="button" name="Submit" id="btn1" style="padding: 0; border: none; background: none;">
                             <span class="input-group-text send-icon">
                                 <i class="bi bi-send "></i>
@@ -318,12 +318,12 @@ Chat
             btn1.click()
         });
         btn1.onclick = event => {
-            addMassage(requestInput.value)
+            addMessage(requestInput.value)
             requestInput.value = ''
         }
 
-        function addMassage(massage) {
-            if (massage !== '') {
+        function addMessage(message) {
+            if (message !== '') {
                 document.getElementById("msg-page").innerHTML +=
                     `<div class='outgoing-chats' id='userMsg'>\
                         <div class='outgoing-chats-img'>\
@@ -331,13 +331,13 @@ Chat
                         </div>\
                         <div class='outgoing-msg'>\
                             <div class='outgoing-chats-msg'>\
-                                <p class='multi-msg'>${massage}</p>\
+                                <p class='multi-msg'>${message}</p>\
                             </div>\
                         </div>\
                     </div>`;
                 
                 scrollToEnd('#msg-page')
-                answer = sendData(massage);
+                answer = sendData(message);
                 setTimeout(async () => addAnswer(await answer), 500);
             }
         }

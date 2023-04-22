@@ -78,6 +78,8 @@ def getSynonymsString(word):
     for synset in wordnet.synsets(word):
         for lemma in synset.lemmas():
             synonyms.append(lemma.name())
+            
+    synonyms.append(word)
     return synonyms
 
 
