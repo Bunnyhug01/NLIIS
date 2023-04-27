@@ -257,7 +257,7 @@ def chat(request):
 	return render(request, 'main/chat.html', {})
 
 def chat_answer(request):
-	message = request.GET.get('message')
+	message = request.GET.get('message').lower()
 	
 	animalsChat = AnimalsChat()
 
@@ -265,7 +265,7 @@ def chat_answer(request):
 	
 	if message in getSynonymsString('help'):
 		answer = '''Get all animals: animals;
-					Find animals by feature: Find predator;
+					Find animals by feature: find predator;
 					Get all features: features;
 					Also you can use some synonyms of command names.'''
 		
